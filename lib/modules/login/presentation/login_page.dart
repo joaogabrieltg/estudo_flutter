@@ -1,24 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import '../data/cep_repository.dart';
-import '../data/cep_model.dart';
 
-class BuscaCepPage extends StatefulWidget {
+class LoginPage extends StatefulWidget {
   @override
-  _BuscaCepPageState createState() => _BuscaCepPageState();
+  _LoginPageState createState() => _LoginPageState();
 }
 
-class _BuscaCepPageState extends State<BuscaCepPage> {
+class _LoginPageState extends State<LoginPage> {
   final TextEditingController _textController = TextEditingController();
+  final TextEditingController _textController2 = TextEditingController();
   String _displayText = '';
-  final CepRepository _cepRepository = Modular.get<CepRepository>();
 
   Future<void> _confirmText() async {
-    final String cep = _textController.text;
+    final String login = _textController.text;
+    final String senha = _textController2.text;
     try {
-      final CepModel cepModel = await _cepRepository.getCep(cep);
+      // TODO: Implementar o login e a autenticação
       setState(() {
-        _displayText = 'Logradouro: ${cepModel.logradouro}\nBairro: ${cepModel.bairro}\nLocalidade: ${cepModel.localidade}\nUF: ${cepModel.uf}\nDDD: ${cepModel.ddd}';
+        Modular.to.pushNamed('/home');
       });
     } catch (e) {
       setState(() {
@@ -40,15 +39,29 @@ class _BuscaCepPageState extends State<BuscaCepPage> {
           children: [
             Padding(
               padding: const EdgeInsets.all(16.0),
-              child: TextField(
-                controller: _textController,
-                decoration: const InputDecoration(
-                  labelText: 'Digite um CEP',
-                ),
+              child: Column(
+                children: [
+                  TextField(
+                    controller: _textController,
+                    decoration: const InputDecoration(
+                      labelText: 'login',
+                    ),
+                  ),
+                  const SizedBox(height: 16.0),
+                  TextField(
+                    controller: _textController2,
+                    obscureText: true,
+                    decoration: const InputDecoration(
+                      labelText: 'senha',
+                    ),
+                  ),
+                ],
               ),
             ),
             ElevatedButton(
-              onPressed: _confirmText,
+              onPressed: () {
+                _confirmText();
+              },
               child: const Text(
                 'Confirmar',
                 style: TextStyle(color: Colors.black),
