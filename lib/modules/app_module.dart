@@ -1,14 +1,14 @@
 import 'package:flutter_modular/flutter_modular.dart';
-import 'presentation/home_page.dart';
-import 'presentation/busca_cep_page.dart';
-import 'data/cep_repository.dart';
+import 'home/presentation/home_page.dart';
+import 'consulta_cep/presentation/busca_cep_page.dart';
+import 'consulta_cep/data/cep_repository.dart';
 import '../shared/dio/use_dio.dart';
 
 class AppModule extends Module {
   @override
-    void exportedBinds(i){
-    i.addSingleton(CepRepository.new);
-    i.addSingleton(useDio.new);
+    void binds(i){
+    i.add(useDio.new);
+    i.add(CepRepository.new);
   }
 
   @override

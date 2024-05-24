@@ -3,10 +3,14 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class useDio {
   useDio() : super();
-  final Dio dio = Dio();
   Future<Response> getResponse(String url) async {
-    final Response response = await dio.get(url);
-    return response;
+    final Response response = await Dio().get(url);
+    if (response.statusCode == 200) {
+      return response;
+    } else {
+      throw Exception(
+          'Erro ao fazer a requisição. Código de status: ${response.statusCode}');
+    }
   }
 }
 
