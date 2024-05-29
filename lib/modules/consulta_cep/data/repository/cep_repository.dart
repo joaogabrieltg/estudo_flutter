@@ -1,9 +1,11 @@
 import 'package:dio/dio.dart';
-import '../../../shared/dio/use_dio.dart';
-import 'cep_model.dart';
+import '../../../../shared/dio/use_dio.dart';
+import '../model/cep_model.dart';
+import '../../domain/repository/cep_repository_interface.dart';
 
-class CepRepository {
+class CepRepository extends CepRepositoryInterface{
   final useDio _dio = useDio();
+  @override
   Future<CepModel> getCep(String cep) async {
     final regex = RegExp(r'^[0-9]{8}');
     if(!regex.hasMatch(cep)) {

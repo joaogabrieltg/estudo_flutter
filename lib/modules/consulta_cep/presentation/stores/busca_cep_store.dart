@@ -1,0 +1,1 @@
+//todo implementar o store (use_case -> stores -> pages)
