@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import '../../data/model/cep_model.dart';
-import '../../domain/user_case/busca_cep_case.dart';
+import '../stores/busca_cep_store.dart';
 
 class BuscaCepPage extends StatefulWidget {
   @override
@@ -11,14 +10,14 @@ class BuscaCepPage extends StatefulWidget {
 class _BuscaCepPageState extends State<BuscaCepPage> {
   final TextEditingController _textController = TextEditingController();
   String _displayText = '';
-  final BuscaCepCase _buscaCepCase = Modular.get<BuscaCepCase>();
+  final BuscaCepStore _buscaCepStore = Modular.get<BuscaCepStore>();
 
   Future<void> _confirmText() async {
     final String cep = _textController.text;
     try {
-      final CepModel cepModel = await _buscaCepCase.getCep(cep);
+      final String cepText = await _buscaCepStore.getText(cep);
       setState(() {
-        _displayText = 'Logradouro: ${cepModel.logradouro}\nBairro: ${cepModel.bairro}\nLocalidade: ${cepModel.localidade}\nUF: ${cepModel.uf}\nDDD: ${cepModel.ddd}';
+        _displayText = cepText;
       });
     } catch (e) {
       setState(() {
