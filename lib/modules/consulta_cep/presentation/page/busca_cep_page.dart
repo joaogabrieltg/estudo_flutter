@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import '../stores/busca_cep_store.dart';
+import '../../../../shared/mobx/loading_store.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 
 class BuscaCepPage extends StatefulWidget {
   @override
@@ -8,19 +10,25 @@ class BuscaCepPage extends StatefulWidget {
 }
 
 class _BuscaCepPageState extends State<BuscaCepPage> {
+  final LoadingStore loadingStore = Modular.get<LoadingStore>();
   final TextEditingController _textController = TextEditingController();
   String _displayText = '';
   final BuscaCepStore _buscaCepStore = Modular.get<BuscaCepStore>();
 
   Future<void> _confirmText() async {
+    loadingStore.isLoading = true;
     final String cep = _textController.text;
     try {
       final String cepText = await _buscaCepStore.getText(cep);
+      await Future.delayed(const Duration(seconds: 1));
       setState(() {
+        loadingStore.isLoading = false;
         _displayText = cepText;
       });
     } catch (e) {
+      await Future.delayed(const Duration(seconds: 2));
       setState(() {
+        loadingStore.isLoading = false;
         _displayText = 'Erro ao fazer a requisição. Detalhes: $e';
       });
     }
@@ -54,10 +62,18 @@ class _BuscaCepPageState extends State<BuscaCepPage> {
               ),
             ),
             const SizedBox(height: 16.0),
-            Text(
-              _displayText,
-              style: const TextStyle(fontSize: 16.0),
-            ),
+            Observer(builder: (_) {
+              if (loadingStore.isLoading) {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              } else {
+                return Text(
+                  _displayText,
+                  style: const TextStyle(fontSize: 16.0),
+                );
+              }
+            }),
           ],
         ),
       ),

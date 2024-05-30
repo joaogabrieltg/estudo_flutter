@@ -6,10 +6,12 @@ import 'consulta_cep/data/repository/cep_repository.dart';
 import 'consulta_cep/domain/user_case/busca_cep_case.dart';
 import 'login/presentation/login_page.dart';
 import '../shared/dio/use_dio.dart';
+import '../shared/mobx/loading_store.dart';
 
 class AppModule extends Module {
   @override
     void binds(i){
+    i.add(LoadingStore.new);
     i.add(useDio.new);
     i.add(CepRepository.new);
     i.add(BuscaCepCase.new);
