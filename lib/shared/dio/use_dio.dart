@@ -1,8 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class useDio {
-  useDio() : super();
+class UseDio {
+  UseDio() : super();
   Future<Response> getResponse(String url) async {
     final Response response = await Dio().get(url);
     if (response.statusCode == 200) {
@@ -14,9 +14,9 @@ class useDio {
   }
 }
 
-class udeDioModule extends Module {
+class UseDioModule extends Module {
   @override
   void exportedBinds(i) {
-    i.addSingleton((i) => useDio());
+    i.addSingleton((i) => UseDio());
   }
 }

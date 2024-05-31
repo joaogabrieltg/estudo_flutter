@@ -4,7 +4,7 @@ import '../model/cep_model.dart';
 import '../../domain/repository/cep_repository_interface.dart';
 
 class CepRepository extends CepRepositoryInterface{
-  final useDio _dio = useDio();
+  final UseDio _dio = UseDio();
   @override
   Future<CepModel> getCep(String cep) async {
     final regex = RegExp(r'^[0-9]{8}');

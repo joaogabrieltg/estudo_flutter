@@ -5,7 +5,7 @@ import '../../shared/dio/use_dio.dart';
 class AppModule extends Module {
   @override
   void binds(i) {
-    i.add(useDio.new);
+    i.add(UseDio.new);
     i.add(BuscaCepCase.new);
   }
 }

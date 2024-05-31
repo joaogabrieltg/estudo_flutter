@@ -12,7 +12,7 @@ class AppModule extends Module {
   @override
     void binds(i){
     i.add(LoadingStore.new);
-    i.add(useDio.new);
+    i.add(UseDio.new);
     i.add(CepRepository.new);
     i.add(BuscaCepCase.new);
     i.add(BuscaCepStore.new);

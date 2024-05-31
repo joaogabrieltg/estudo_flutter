@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import '../stores/busca_cep_store.dart';
 import '../../../../shared/mobx/loading_store.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -10,10 +9,10 @@ class BuscaCepPage extends StatefulWidget {
 }
 
 class _BuscaCepPageState extends State<BuscaCepPage> {
-  final LoadingStore loadingStore = Modular.get<LoadingStore>();
+  final loadingStore = LoadingStore();
   final TextEditingController _textController = TextEditingController();
   String _displayText = '';
-  final BuscaCepStore _buscaCepStore = Modular.get<BuscaCepStore>();
+  final _buscaCepStore = BuscaCepStore();
 
   Future<void> _confirmText() async {
     loadingStore.isLoading = true;
