@@ -17,7 +17,7 @@ class _LoginPageState extends State<LoginPage> {
     try {
       // TODO: Implementar o login e a autenticação
       setState(() {
-        Modular.to.pushNamed('/home');
+        Modular.to.navigate('/home');
       });
     } catch (e) {
       setState(() {

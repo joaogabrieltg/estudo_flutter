@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import '../stores/busca_cep_store.dart';
 import '../../../../shared/mobx/loading_store.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class BuscaCepPage extends StatefulWidget {
   @override
@@ -12,7 +13,7 @@ class _BuscaCepPageState extends State<BuscaCepPage> {
   final loadingStore = LoadingStore();
   final TextEditingController _textController = TextEditingController();
   String _displayText = '';
-  final _buscaCepStore = BuscaCepStore();
+  final BuscaCepStore _buscaCepStore = Modular.get<BuscaCepStore>();
 
   Future<void> _confirmText() async {
     loadingStore.isLoading = true;

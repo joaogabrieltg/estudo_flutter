@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
           padding: const EdgeInsets.all(16.0),
           child: ElevatedButton(
             onPressed: () {
-              Modular.to.pushNamed('/busca_cep');
+              Modular.to.navigate('/busca_cep');
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.lightBlue,
