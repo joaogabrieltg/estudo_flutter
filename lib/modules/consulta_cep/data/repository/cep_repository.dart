@@ -1,22 +1,12 @@
-import 'package:dio/dio.dart';
-import '../../../../shared/dio/use_dio.dart';
+import 'package:estudo_flutter/modules/consulta_cep/data/datasource/cep_remote_datasource.dart';
 import '../model/cep_model.dart';
 import '../../domain/repository/cep_repository_interface.dart';
 
-class CepRepository extends CepRepositoryInterface{
-  final UseDio _dio = UseDio();
+class CepRepository extends CepRepositoryInterface {
+  final CepRemoteDatasource _cepRemoteDatasourceInterface;
+  CepRepository(this._cepRemoteDatasourceInterface);
   @override
   Future<CepModel> getCep(String cep) async {
-    final regex = RegExp(r'^[0-9]{8}');
-    if(!regex.hasMatch(cep)) {
-      throw Exception('CEP inválido');
-    }
-    final Response response = await _dio.getResponse('https://viacep.com.br/ws/$cep/json/');
-    if (response.statusCode == 200) {
-      return CepModel.fromJson(response.data);
-    } else {
-      throw Exception(
-          'Erro ao fazer a requisição. Código de status: ${response.statusCode}');
-    }
+    return await _cepRemoteDatasourceInterface.getCep(cep);
   }
 }
