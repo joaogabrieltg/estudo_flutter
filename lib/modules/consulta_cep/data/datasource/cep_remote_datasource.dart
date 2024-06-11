@@ -2,11 +2,11 @@ import 'package:dio/dio.dart';
 import '../../../../shared/dio/use_dio.dart';
 import 'package:estudo_flutter/modules/consulta_cep/data/model/cep_model.dart';
 //o import do dio fica aqui
-abstract class CepRemoteDatasource {
+abstract class CepRemoteDatasourceInterface {
   Future<CepModel> getCep(String cep);
 }
 
-class _CepRemoteDatasource implements CepRemoteDatasource {
+class CepRemoteDatasource extends CepRemoteDatasourceInterface {
   final UseDio _dio = UseDio();
   @override
   Future<CepModel> getCep(String cep) async {

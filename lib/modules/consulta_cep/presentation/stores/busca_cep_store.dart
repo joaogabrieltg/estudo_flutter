@@ -8,13 +8,14 @@ class BuscaCepStore {
   Future<String> getText(cep) async {
     final CepModel cepModel = await _buscaCepCase.getCep(cep);
     final cepData = {
-        'cep': int.parse(cep),
-        'logradouro': cepModel.logradouro,
-        'bairro': cepModel.bairro,
-        'localidade': cepModel.localidade,
-        'uf': cepModel.uf,
-        'ddd': cepModel.ddd,
-      };
+      'cep': int.parse(cep),
+      'logradouro': cepModel.logradouro,
+      'bairro': cepModel.bairro,
+      'localidade': cepModel.localidade,
+      'uf': cepModel.uf,
+      'ddd': cepModel.ddd,
+    };
+    _buscaCepCase.addToDatabase(cepData);
     return 'Logradouro: ${cepModel.logradouro}\nBairro: ${cepModel.bairro}\nLocalidade: ${cepModel.localidade}\nUF: ${cepModel.uf}\nDDD: ${cepModel.ddd}';
   }
 }
