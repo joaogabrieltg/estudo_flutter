@@ -35,7 +35,7 @@ class AppModule extends Module {
   @override
     void routes(r) {
     r.module('/',module: LoginModule());
-    r.module('/home',module: HomeModule());
-    r.module('/busca_cep',module: ConsultaCepModule());
+    r.module('/home/',module: HomeModule());
+    r.module('/busca_cep/',module: ConsultaCepModule());
   }
 }

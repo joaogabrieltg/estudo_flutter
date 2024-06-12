@@ -15,7 +15,7 @@ class BuscaCepCase {
       throw Exception('Erro ao fazer a requisição. Detalhes: $e');
     }
   }
-  Future<void> addToDatabase(Map<String, Object> cepData){
+  Future<void> addToDatabase(Map<String, dynamic> cepData){
     return _cepDbRepositoryInterface.addToDatabase(cepData);
   }
 }

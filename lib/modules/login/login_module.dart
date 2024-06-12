@@ -6,6 +6,6 @@ class LoginModule extends Module {
   @override
   void routes(r) {
     r.child('/',child: (context) => LoginPage());
-    r.module('/home',module: HomeModule());
+    r.module('/home/',module: HomeModule());
   }
 }

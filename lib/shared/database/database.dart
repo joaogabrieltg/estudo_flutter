@@ -7,7 +7,7 @@ class CepDatabase {
       version: 1,
       onCreate: (Database db, int version) async {
         await db.execute(
-            'CREATE TABLE CEP (cep INTEGER PRIMARY KEY, logradouro TEXT, bairro TEXT, localidade TEXT, uf TEXT, ddd TEXT)');
+            'CREATE TABLE CEP (cep TEXT PRIMARY KEY, logradouro TEXT, bairro TEXT, localidade TEXT, uf TEXT, ddd TEXT)');
       },
     );
   }

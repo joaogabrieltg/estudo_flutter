@@ -3,7 +3,7 @@ import 'package:estudo_flutter/shared/database/database.dart';
 import 'package:sqflite/sqflite.dart';
 
 abstract class CepLocalDatasourceInterface {
-  Future<void> addToDatabase(Map<String, Object> cepData);
+  Future<void> addToDatabase(Map<String, dynamic> cepData);
   Future<CepModel> getFromDatabase(String cep);
   Future<List<Map<String, dynamic>>> getCeps();
   Future<void> deleteCep(String cep);
@@ -12,7 +12,7 @@ abstract class CepLocalDatasourceInterface {
 class CepLocalDatasource extends CepLocalDatasourceInterface {
   CepDatabase cepDatabase = CepDatabase();
   @override
-  Future<void> addToDatabase(Map<String, Object> cepData) async {
+  Future<void> addToDatabase(Map<String, dynamic> cepData) async {
     final db = await cepDatabase.getDatabase();
     await db.insert(
       'CEP',

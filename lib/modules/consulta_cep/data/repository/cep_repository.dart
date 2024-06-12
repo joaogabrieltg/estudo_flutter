@@ -3,7 +3,7 @@ import '../model/cep_model.dart';
 import '../../domain/repository/cep_repository_interface.dart';
 
 class CepRepository extends CepRepositoryInterface {
-  final CepRemoteDatasource _cepRemoteDatasourceInterface;
+  final CepRemoteDatasourceInterface _cepRemoteDatasourceInterface;
   CepRepository(this._cepRemoteDatasourceInterface);
   @override
   Future<CepModel> getCep(String cep) async {

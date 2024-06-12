@@ -3,10 +3,10 @@ import '../model/cep_model.dart';
 import '../../domain/repository/cep_db_repository_interface.dart';
 
 class CepDbRepository extends CepDbRepositoryInterface {
-  final CepLocalDatasource _cepLocalDatasourceInterface;
+  final CepLocalDatasourceInterface _cepLocalDatasourceInterface;
   CepDbRepository(this._cepLocalDatasourceInterface);
   @override
-  Future<void> addToDatabase(Map<String, Object> cepData) {
+  Future<void> addToDatabase(Map<String, dynamic> cepData) {
     return _cepLocalDatasourceInterface.addToDatabase(cepData);
   }  
   @override

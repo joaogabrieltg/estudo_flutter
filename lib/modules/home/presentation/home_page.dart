@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
             children: [
               ElevatedButton(
                 onPressed: () {
-                  Modular.to.navigate('/busca_cep');
+                  Modular.to.pushNamed('/busca_cep');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.lightBlue,
@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
               const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  Modular.to.navigate('/busca_cep/history');
+                  Modular.to.pushNamed('/busca_cep/history');
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.lightGreen,

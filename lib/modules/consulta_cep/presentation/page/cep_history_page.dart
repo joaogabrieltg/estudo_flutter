@@ -35,7 +35,7 @@ class _CepHistoryPageState extends State<CepHistoryPage> {
           final cep = _ceps[index];
           return Card(
             child: ListTile(
-              title: Text(cep['cep']),
+              title: Text(cep['cep'].toString()),
               subtitle: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

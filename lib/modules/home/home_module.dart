@@ -7,6 +7,6 @@ class HomeModule extends Module {
     @override
   void routes(r) {
     r.child('/',child: (context) => HomePage());
-    r.module('/busca_cep', module: ConsultaCepModule());
+    r.module('/busca_cep/', module: ConsultaCepModule());
   }
 }
