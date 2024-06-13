@@ -34,7 +34,7 @@ class HomePage extends StatelessWidget {
               const SizedBox(height: 16.0),
               ElevatedButton(
                 onPressed: () {
-                  Modular.to.pushNamed('/busca_cep/history');
+                  Modular.to.pushNamed('/busca_cep/history'); //move to user
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Colors.lightGreen,

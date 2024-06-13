@@ -1,0 +1,1 @@
+//username, email, history button, logout, edit button and remove account

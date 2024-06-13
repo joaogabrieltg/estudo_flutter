@@ -15,7 +15,7 @@ class _LoginPageState extends State<LoginPage> {
     final String login = _textController.text;
     final String senha = _textController2.text;
     try {
-      // TODO: Implementar o login e a autenticação
+      // TODO: Implementar o sign in, login e a autenticação
       setState(() {
         Modular.to.pushNamed('/home/');
       });

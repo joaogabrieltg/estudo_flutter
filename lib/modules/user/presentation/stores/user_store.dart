@@ -1,0 +1,1 @@
+//gets data for the pages, and commands for the cases

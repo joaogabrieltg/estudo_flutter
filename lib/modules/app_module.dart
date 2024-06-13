@@ -18,7 +18,7 @@ import '../shared/mobx/loading_store.dart';
 
 class AppModule extends Module {
   @override
-    void binds(i){
+  void binds(i) {
     i.add(LoadingStore.new);
     i.add(CepDatabase.new);
     i.add(UseDio.new);
@@ -33,9 +33,10 @@ class AppModule extends Module {
   }
 
   @override
-    void routes(r) {
-    r.module('/',module: LoginModule());
-    r.module('/home/',module: HomeModule());
-    r.module('/busca_cep/',module: ConsultaCepModule());
+  void routes(r) {
+    r.module('/', module: LoginModule());
+    r.module('/home/', module: HomeModule());
+    r.module('/busca_cep/', module: ConsultaCepModule());
+    //home (access app) -> check login (->) login/signin (firebase?) -> busca cep (busca/user) -> user(logout/edit/delete/history) -> history
   }
 }
