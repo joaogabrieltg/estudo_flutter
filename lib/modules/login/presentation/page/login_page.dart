@@ -1,80 +1,48 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter/material.dart'; // ignore_for_file: must_be_immutable
+import '../widgets/auth_widgets.dart';
 
-class LoginPage extends StatefulWidget {
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
+// ignore_for_file: must_be_immutable
+class LoginPage extends StatelessWidget {
+  LoginPage({Key? key})
+      : super(
+          key: key,
+        );
 
-class _LoginPageState extends State<LoginPage> {
-  final TextEditingController _textController = TextEditingController();
-  final TextEditingController _textController2 = TextEditingController();
-  String _displayText = '';
+  TextEditingController emailInputController = TextEditingController();
 
-  Future<void> _confirmText() async {
-    final String login = _textController.text;
-    final String senha = _textController2.text;
-    try {
-      // TODO: Implementar o sign in, login e a autenticação
-      setState(() {
-        Modular.to.pushNamed('/home/');
-      });
-    } catch (e) {
-      setState(() {
-        _displayText = 'Erro ao fazer a requisição. Detalhes: $e';
-      });
-    }
-  }
+  TextEditingController passwordInputController = TextEditingController();
+
+  AuthScreenWidgets widgets = AuthScreenWidgets();
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Busca CEP'),
-        backgroundColor: Colors.blue,
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+        title: const Text(
+          'BuscaCep', style: TextStyle(
+          fontFamily: 'Inter',
+          color: Color(0XFFFFFFFF),
+          fontWeight: FontWeight.w400)),
+        backgroundColor: Color(0XFF5DB075),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  TextField(
-                    controller: _textController,
-                    decoration: const InputDecoration(
-                      labelText: 'login',
-                    ),
-                  ),
-                  const SizedBox(height: 16.0),
-                  TextField(
-                    controller: _textController2,
-                    obscureText: true,
-                    decoration: const InputDecoration(
-                      labelText: 'senha',
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                _confirmText();
-              },
-              child: const Text(
-                'Confirmar',
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
-            const SizedBox(height: 16.0),
-            Text(
-              _displayText,
-              style: const TextStyle(fontSize: 16.0),
-            ),
-          ],
+        backgroundColor: Color(0XFFFFFFFF),
+        resizeToAvoidBottomInset: false,
+        body: Container(
+          width: double.maxFinite,
+          padding: EdgeInsets.only(
+            left: 14,
+            top: 60,
+            right: 14,
+          ),
+          child: Column(
+            children: [widgets.buildLoginForm(context, emailInputController, passwordInputController), SizedBox(height: 4)],
+          ),
         ),
       ),
     );
   }
+
+  /// Section Widget
+  
 }
