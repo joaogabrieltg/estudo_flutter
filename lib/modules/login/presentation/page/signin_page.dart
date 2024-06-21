@@ -14,6 +14,9 @@ class SignupScreen extends StatelessWidget {
 
   TextEditingController passwordoneController = TextEditingController();
 
+  TextEditingController passwordconfirmController = TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -192,37 +195,37 @@ class SignupScreen extends StatelessWidget {
             ),
           ),
           SizedBox(height: 16),
-          SizedBox(
-            height: 50,
-            width: double.maxFinite,
-            child: Stack(
-              alignment: Alignment.center,
-              children: [
-                SizedBox(
-                  height: 50,
-                  width: double.maxFinite,
-                  child: SvgPicture.asset(
-                    "../../../../shared/assets/images/img_mask_group.svg",
-                  ),
+          Container(
+            width: 342,
+            child: TextFormField(
+              focusNode: FocusNode(),
+              autofocus: true,
+              controller: passwordconfirmController,
+              style: TextStyle(
+                color: Color(0XFFBDBDBD),
+                fontSize: 16,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w400,
+              ),
+              textInputAction: TextInputAction.done,
+              decoration: InputDecoration(
+                hintText: "Confirmar Senha",
+                hintStyle: TextStyle(
+                  color: Color(0XFFBDBDBD),
+                  fontSize: 16,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w400,
                 ),
-                Align(
-                  alignment: Alignment.centerLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(left: 16),
-                    child: Text(
-                      "Confirmar Senha",
-                      style: TextStyle(
-                        color: Color(0XFFBDBDBD),
-                        fontSize: 16,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                  ),
-                )
-              ],
+                filled: true,
+                fillColor: Color(0XFFFFFFFF),
+                isDense: true,
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 14,
+                ),
+              ),
             ),
-          )
+          ),
         ],
       ),
     );

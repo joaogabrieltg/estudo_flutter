@@ -8,6 +8,7 @@ import 'package:estudo_flutter/modules/consulta_cep/domain/user_case/cep_history
 import 'package:estudo_flutter/modules/consulta_cep/presentation/stores/cep_history_store.dart';
 import 'package:estudo_flutter/modules/home/home_module.dart';
 import 'package:estudo_flutter/modules/login/login_module.dart';
+import 'package:estudo_flutter/modules/user/user_module.dart';
 import 'package:estudo_flutter/shared/database/database.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'consulta_cep/presentation/stores/busca_cep_store.dart';
@@ -37,6 +38,7 @@ class AppModule extends Module {
     r.module('/', module: LoginModule());
     r.module('/home/', module: HomeModule());
     r.module('/busca_cep/', module: ConsultaCepModule());
+    r.module('/user', module: UserModule());
     //home (access app) -> check login (->) login/signin (firebase?) -> busca cep (busca/user) -> user(logout/edit/delete/history) -> history
   }
 }

@@ -3,6 +3,8 @@ import 'package:estudo_flutter/modules/consulta_cep/presentation/stores/cep_hist
 import 'package:flutter_modular/flutter_modular.dart';
 
 class CepHistoryPage extends StatefulWidget {
+  const CepHistoryPage({Key? key}) : super(key: key);
+
   @override
   _CepHistoryPageState createState() => _CepHistoryPageState();
 }
@@ -27,28 +29,46 @@ class _CepHistoryPageState extends State<CepHistoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Histórico de CEPs'),
+        title: const Text('Histórico de CEPs'),
       ),
-      body: ListView.builder(
-        itemCount: _ceps.length,
-        itemBuilder: (context, index) {
-          final cep = _ceps[index];
-          return Card(
-            child: ListTile(
-              title: Text(cep['cep'].toString()),
-              subtitle: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text('Logradouro: ${cep['logradouro']}'),
-                  Text('Bairro: ${cep['bairro']}'),
-                  Text('Localidade: ${cep['localidade']}'),
-                  Text('UF: ${cep['uf']}'),
-                  Text('DDD: ${cep['ddd']}'),
-                ],
+      body: Column(
+        children: [
+          const Padding(
+            padding: EdgeInsets.all(8.0),
+            child: Text(
+              "Histórico",
+              style: TextStyle(
+                color: Color(0XFF272727),
+                fontFamily: 'Inter',
+                fontSize: 30,
+                fontWeight: FontWeight.w400,
               ),
             ),
-          );
-        },
+          ),
+          Expanded(
+            child: ListView.builder(
+              itemCount: _ceps.length,
+              itemBuilder: (context, index) {
+                final cep = _ceps[index];
+                return Card(
+                  child: ListTile(
+                    title: Text(cep['cep'].toString()),
+                    subtitle: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text('Logradouro: ${cep['logradouro']}'),
+                        Text('Bairro: ${cep['bairro']}'),
+                        Text('Localidade: ${cep['localidade']}'),
+                        Text('UF: ${cep['uf']}'),
+                        Text('DDD: ${cep['ddd']}'),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            ),
+          ),
+        ],
       ),
     );
   }

@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import '../../../../shared/mobx/auth_store.dart';
 
-class AuthScreenWidgets{  
-Widget buildEmailInput(BuildContext context, TextEditingController emailInputController) {
+class AuthScreenWidgets {
+  Widget buildEmailInput(
+      BuildContext context, TextEditingController emailInputController) {
     return SizedBox(
       width: 342,
       child: TextFormField(
@@ -41,58 +44,62 @@ Widget buildEmailInput(BuildContext context, TextEditingController emailInputCon
 
   /// Section Widget
   // ignore: use_function_type_syntax_for_parameters
-  Widget buildPasswordInput(BuildContext context, TextEditingController passwordInputController) {
-    return SizedBox(
-      width: 342,
-      child: TextFormField(
-        focusNode: FocusNode(),
-        autofocus: true,
-        controller: passwordInputController,
-        style: TextStyle(
-          color: Color(0XFFBDBDBD),
-          fontSize: 16,
-          fontFamily: 'Inter',
-          fontWeight: FontWeight.w400,
-        ),
-        textInputAction: TextInputAction.done,
-        obscureText: true,
-        decoration: InputDecoration(
-          hintText: "Senha",
-          hintStyle: TextStyle(
+  Widget buildPasswordInput(
+      BuildContext context, TextEditingController passwordInputController) {
+        final AuthStore authStore = AuthStore();
+    return Observer(builder: (_) {
+      return SizedBox(
+        width: 342,
+        child: TextFormField(
+          focusNode: FocusNode(),
+          autofocus: true,
+          controller: passwordInputController,
+          style: TextStyle(
             color: Color(0XFFBDBDBD),
             fontSize: 16,
             fontFamily: 'Inter',
             fontWeight: FontWeight.w400,
           ),
-          suffixIcon: Padding(
-            padding: EdgeInsets.fromLTRB(30, 14, 16, 14),
-            child:
-            GestureDetector(
-            onTap: () {
-              //TODO: Implementar o show
-            },
-            child: Text(
-              "Show",
-              style: TextStyle(
-                color: Color(0XFF5DB075),
-                fontSize: 16,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w400,
+          textInputAction: TextInputAction.done,
+          obscureText: authStore.isObscure,
+          decoration: InputDecoration(
+            hintText: "Senha",
+            hintStyle: TextStyle(
+              color: Color(0XFFBDBDBD),
+              fontSize: 16,
+              fontFamily: 'Inter',
+              fontWeight: FontWeight.w400,
+            ),
+            suffixIcon: Padding(
+              padding: EdgeInsets.fromLTRB(30, 14, 16, 14),
+              child: GestureDetector(
+                onTap: () {
+                  //fazer funcionar
+                  authStore.changeObscureText();
+                },
+                child: Text(
+                  "Show",
+                  style: TextStyle(
+                    color: Color(0XFF5DB075),
+                    fontSize: 16,
+                    fontFamily: 'Inter',
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
               ),
             ),
+            suffixIconConstraints: BoxConstraints(
+              maxHeight: 50,
+            ),
+            isDense: true,
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 14,
             ),
           ),
-          suffixIconConstraints: BoxConstraints(
-            maxHeight: 50,
-          ),
-          isDense: true,
-          contentPadding: EdgeInsets.symmetric(
-            horizontal: 16,
-            vertical: 14,
-          ),
         ),
-      ),
-    );
+      );
+    });
   }
 
   /// Section Widget
@@ -135,7 +142,10 @@ Widget buildEmailInput(BuildContext context, TextEditingController emailInputCon
   }
 
   /// Section Widget
-  Widget buildLoginForm(BuildContext context, TextEditingController emailInputController, TextEditingController passwordInputController) {
+  Widget buildLoginForm(
+      BuildContext context,
+      TextEditingController emailInputController,
+      TextEditingController passwordInputController) {
     return SizedBox(
       width: double.maxFinite,
       child: Column(
@@ -156,52 +166,52 @@ Widget buildEmailInput(BuildContext context, TextEditingController emailInputCon
           SizedBox(height: 16),
           GestureDetector(
             onTap: () {
-              Modular.to.pushNamed('/register/'); //TODO: Implementar a redefinição de senha
+              Modular.to.pushNamed(
+                  '/register/'); //TODO: Implementar a redefinição de senha
             },
-          child: Text(
-            "Esqueceu sua senha?",
-            style: TextStyle(
-              color: Color(0XFF5DB075),
-              fontSize: 16,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w400,
+            child: Text(
+              "Esqueceu sua senha?",
+              style: TextStyle(
+                color: Color(0XFF5DB075),
+                fontSize: 16,
+                fontFamily: 'Inter',
+                fontWeight: FontWeight.w400,
+              ),
             ),
-          ),
           ),
           SizedBox(height: 124),
           buildLoginButton(context),
           SizedBox(height: 16),
           GestureDetector(
-            onTap: () {
-              Modular.to.pushNamed('/register/');
-            },
-            child: RichText(
-            text: TextSpan(
-              children: [
-                TextSpan(
-                  text: "Não tem conta? ",
-                  style: TextStyle(
-                    color: Color(0XFF5DB075),
-                    fontSize: 16,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                  ),
+              onTap: () {
+                Modular.to.pushNamed('/register/');
+              },
+              child: RichText(
+                text: TextSpan(
+                  children: [
+                    TextSpan(
+                      text: "Não tem conta? ",
+                      style: TextStyle(
+                        color: Color(0XFF5DB075),
+                        fontSize: 16,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                    TextSpan(
+                      text: "Cadastre-se",
+                      style: TextStyle(
+                        color: Color(0XFF5DB075),
+                        fontSize: 16,
+                        fontFamily: 'Inter',
+                        fontWeight: FontWeight.w400,
+                        decoration: TextDecoration.underline,
+                      ),
+                    )
+                  ],
                 ),
-                TextSpan(
-                  text: "Cadastre-se",
-                  style: TextStyle(
-                    color: Color(0XFF5DB075),
-                    fontSize: 16,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
-                    decoration: TextDecoration.underline,
-                  ),
-                )
-              ],
-            ),
-            textAlign: TextAlign.left,
-          )
-          )
+                textAlign: TextAlign.left,
+              ))
         ],
       ),
     );

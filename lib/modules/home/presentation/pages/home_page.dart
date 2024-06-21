@@ -1,9 +1,10 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
-class UserPage extends StatelessWidget {
-  const UserPage({Key? key})
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key})
       : super(
           key: key,
         );
@@ -15,15 +16,15 @@ class UserPage extends StatelessWidget {
         backgroundColor: Color(0XFFFFFFFF),
         body: Container(
           width: double.maxFinite,
-          padding: EdgeInsets.symmetric(
-            horizontal: 32,
-            vertical: 30,
+          padding: EdgeInsets.only(
+            left: 32,
+            top: 62,
+            right: 32,
           ),
           child: Column(
             children: [
-              SizedBox(height: 20),
               Text(
-                "Perfil",
+                "BuscaCep",
                 style: TextStyle(
                   color: Color(0XFF272727),
                   fontSize: 30,
@@ -31,64 +32,40 @@ class UserPage extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                 ),
               ),
-              Text(
-                "Username",
-                style: TextStyle(
-                  color: Color(0XFF272727),
-                  fontSize: 25,
-                  fontFamily: 'Signika',
-                  fontWeight: FontWeight.w400,
-                ),
-              ),
-              SizedBox(height: 20),
+              SizedBox(height: 42),
               Container(
                 width: double.maxFinite,
                 margin: EdgeInsets.only(right: 4),
                 child: _buildSelection(
                   context,
-                  text: "Editar Perfil",
+                  text: "Perfil",
                   iconData: Icons.person,
-                  route: "/edit_profile",
+                  route: '/user',
                 ),
               ),
-              SizedBox(height: 16),
+              SizedBox(height: 14),
               Container(
                 width: double.maxFinite,
                 margin: EdgeInsets.only(right: 4),
                 child: _buildSelection(
                   context,
-                  text: "Sair",
-                  iconData: Icons.logout,
-                  route: "/../../",
+                  text: "Busca Cep",
+                  iconData: Icons.search,
+                  route: '/busca_cep',
                 ),
               ),
-              Spacer(),
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "Não gostou do app? ",
-                      style: TextStyle(
-                        color: Color(0XFFE26565),
-                        fontSize: 15,
-                        fontFamily: 'Signika',
-                        fontWeight: FontWeight.w400,
-                      ),
-                    ),
-                    TextSpan(
-                      text: "Excluir conta",
-                      style: TextStyle(
-                        color: Color(0XFFE26565),
-                        fontSize: 15,
-                        fontFamily: 'Signika',
-                        fontWeight: FontWeight.w400,
-                        decoration: TextDecoration.underline,
-                      ),
-                    )
-                  ],
+              SizedBox(height: 14),
+              Container(
+                width: double.maxFinite,
+                margin: EdgeInsets.only(right: 4),
+                child: _buildSelection(
+                  context,
+                  text: "Histórico de Busca",
+                  iconData: Icons.history,
+                  route: '/busca_cep/history',
                 ),
-                textAlign: TextAlign.left,
-              )
+              ),
+              SizedBox(height: 4)
             ],
           ),
         ),
