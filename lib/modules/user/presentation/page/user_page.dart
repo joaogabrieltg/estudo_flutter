@@ -12,17 +12,17 @@ class UserPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0XFFFFFFFF),
+        backgroundColor: const Color(0XFFFFFFFF),
         body: Container(
           width: double.maxFinite,
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             horizontal: 32,
             vertical: 30,
           ),
           child: Column(
             children: [
-              SizedBox(height: 20),
-              Text(
+              const SizedBox(height: 20),
+              const Text(
                 "Perfil",
                 style: TextStyle(
                   color: Color(0XFF272727),
@@ -31,7 +31,7 @@ class UserPage extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                 ),
               ),
-              Text(
+              const Text(
                 "Username",
                 style: TextStyle(
                   color: Color(0XFF272727),
@@ -40,10 +40,10 @@ class UserPage extends StatelessWidget {
                   fontWeight: FontWeight.w400,
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Container(
                 width: double.maxFinite,
-                margin: EdgeInsets.only(right: 4),
+                margin: const EdgeInsets.only(right: 4),
                 child: _buildSelection(
                   context,
                   text: "Editar Perfil",
@@ -51,10 +51,10 @@ class UserPage extends StatelessWidget {
                   route: "/edit_profile",
                 ),
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Container(
                 width: double.maxFinite,
-                margin: EdgeInsets.only(right: 4),
+                margin: const EdgeInsets.only(right: 4),
                 child: _buildSelection(
                   context,
                   text: "Sair",
@@ -62,10 +62,11 @@ class UserPage extends StatelessWidget {
                   route: "/../../",
                 ),
               ),
-              Spacer(),
+              const Spacer(),
               RichText(
-                text: TextSpan(
+                text: const TextSpan(
                   children: [
+                    //add actions to text and use overlay
                     TextSpan(
                       text: "Não gostou do app? ",
                       style: TextStyle(
@@ -116,23 +117,23 @@ Widget _buildSelection(
             width: 48,
             height: 48,
             decoration: BoxDecoration(
-              color: Color(0XFF91C788),
+              color: const Color(0XFF91C788),
               borderRadius: BorderRadius.circular(
                 8,
               ),
             ),
-            padding: EdgeInsets.all(12),
+            padding: const EdgeInsets.all(12),
             child: Icon(
               iconData,
-              color: Color(0XFFFFFFFF),
+              color: const Color(0XFFFFFFFF),
               size: 24,
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(left: 16),
+            padding: const EdgeInsets.only(left: 16),
             child: Text(
               text,
-              style: TextStyle(
+              style: const TextStyle(
                 color: Color(0XFF707070),
                 fontSize: 17,
                 fontFamily: 'Signika',
@@ -140,8 +141,8 @@ Widget _buildSelection(
               ),
             ),
           ),
-          Spacer(),
-          Icon(
+          const Spacer(),
+          const Icon(
             Icons.arrow_forward_ios,
             color: Color(0XFF5DB075),
             size: 24,
