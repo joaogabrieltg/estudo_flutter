@@ -15,14 +15,6 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-        title: const Text(
-          'BuscaCep', style: TextStyle(
-          fontFamily: 'Inter',
-          color: Color(0XFFFFFFFF),
-          fontWeight: FontWeight.w400)),
-        backgroundColor: const Color(0XFF5DB075),
-      ),
         backgroundColor: const Color(0XFFFFFFFF),
         resizeToAvoidBottomInset: false,
         body: Container(

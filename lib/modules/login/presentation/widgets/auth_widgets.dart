@@ -2,35 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import '../../../../shared/mobx/auth_store.dart';
+import 'package:estudo_flutter/shared/widgets/global_widgets.dart';
+
 
 class AuthScreenWidgets {
+  
+  TextStyle textInputStyle = GlobalWidgets().textInputStyle;
+  TextStyle selectableTextStyle = GlobalWidgets().selectableTextStyle;
+  TextStyle buttonTextStyle = GlobalWidgets().buttonTextStyle;
+  TextStyle titleStyle = GlobalWidgets().titleStyle;
 
-  TextStyle textInputStyle = const TextStyle(
-    color: Color(0XFFBDBDBD),
-    fontSize: 16,
-    fontFamily: 'Inter',
-    fontWeight: FontWeight.w400,
-  );
-  TextStyle selectableTextStyle = const TextStyle(
-    color: Color(0XFF5DB075),
-    fontSize: 16,
-    fontFamily: 'Inter',
-    fontWeight: FontWeight.w400,
-  );
-  TextStyle buttonTextStyle = const TextStyle(
-    color: Color(0XFFFFFFFF),
-    fontSize: 16,
-    fontFamily: 'Inter',
-    fontWeight: FontWeight.w400,
-  );
-  TextStyle titleStyle = const TextStyle(
-    color: Color(0XFF000000),
-    fontSize: 30,
-    fontFamily: 'Inter',
-    fontWeight: FontWeight.w400,
-  );
-
-  Widget buildEmailInput(BuildContext context,
+  Widget buildTextInput(BuildContext context,
       TextEditingController emailInputController, String label) {
     return SizedBox(
       width: 342,
@@ -142,7 +124,7 @@ class AuthScreenWidgets {
             style: titleStyle,
           ),
           const SizedBox(height: 28),
-          buildEmailInput(context, emailInputController, "Login"),
+          buildTextInput(context, emailInputController, "Login"),
           const SizedBox(height: 16),
           buildPasswordInput(context, passwordInputController, false),
           const SizedBox(height: 16),
@@ -198,9 +180,9 @@ class AuthScreenWidgets {
             style: titleStyle,
           ),
           const SizedBox(height: 28),
-          buildEmailInput(context, usernameInputController, "Nome de Usuário"),
+          buildTextInput(context, usernameInputController, "Nome de Usuário"),
           const SizedBox(height: 16),
-          buildEmailInput(context, emailInputController, "Email"),
+          buildTextInput(context, emailInputController, "Email"),
           const SizedBox(height: 16),
           buildPasswordInput(context, passwordInputController, false),
           const SizedBox(height: 16),
