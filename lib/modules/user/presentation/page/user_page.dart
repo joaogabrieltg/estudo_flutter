@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class UserPage extends StatelessWidget {
-  const UserPage({Key? key})
-      : super(
-          key: key,
-        );
+  const UserPage({super.key});
 
   @override
   Widget build(BuildContext context) {

@@ -4,49 +4,54 @@ import 'package:flutter_modular/flutter_modular.dart';
 import '../../../../shared/mobx/auth_store.dart';
 
 class AuthScreenWidgets {
-  Widget buildEmailInput(
-      BuildContext context, TextEditingController emailInputController) {
+
+  TextStyle textInputStyle = const TextStyle(
+    color: Color(0XFFBDBDBD),
+    fontSize: 16,
+    fontFamily: 'Inter',
+    fontWeight: FontWeight.w400,
+  );
+  TextStyle selectableTextStyle = const TextStyle(
+    color: Color(0XFF5DB075),
+    fontSize: 16,
+    fontFamily: 'Inter',
+    fontWeight: FontWeight.w400,
+  );
+  TextStyle buttonTextStyle = const TextStyle(
+    color: Color(0XFFFFFFFF),
+    fontSize: 16,
+    fontFamily: 'Inter',
+    fontWeight: FontWeight.w400,
+  );
+  TextStyle titleStyle = const TextStyle(
+    color: Color(0XFF000000),
+    fontSize: 30,
+    fontFamily: 'Inter',
+    fontWeight: FontWeight.w400,
+  );
+
+  Widget buildEmailInput(BuildContext context,
+      TextEditingController emailInputController, String label) {
     return SizedBox(
       width: 342,
       child: TextFormField(
         focusNode: FocusNode(),
         autofocus: true,
         controller: emailInputController,
+        style: textInputStyle,
         decoration: InputDecoration(
-          labelText: "Login",
-          labelStyle: TextStyle(
-            color: Color(0XFFBDBDBD),
-            fontSize: 16,
-            fontFamily: 'Inter',
-            fontWeight: FontWeight.w400,
-          ),
-          hintText: "Login",
-          hintStyle: TextStyle(
-            color: Color(0XFFBDBDBD),
-            fontSize: 16,
-            fontFamily: 'Inter',
-            fontWeight: FontWeight.w400,
-          ),
-          filled: true,
-          fillColor: Color(0XFFFFFFFF),
-          isDense: true,
-          contentPadding: EdgeInsets.fromLTRB(16, 16, 16, 12),
-        ),
-        style: TextStyle(
-          color: Color(0XFFBDBDBD),
-          fontSize: 16,
-          fontFamily: 'Inter',
-          fontWeight: FontWeight.w400,
+          hintText: label,
+          hintStyle: textInputStyle,
+          labelStyle: textInputStyle,
         ),
       ),
     );
   }
 
   /// Section Widget
-  // ignore: use_function_type_syntax_for_parameters
-  Widget buildPasswordInput(
-      BuildContext context, TextEditingController passwordInputController) {
-        final AuthStore authStore = AuthStore();
+  Widget buildPasswordInput(BuildContext context,
+      TextEditingController passwordInputController, bool confirmarSenha) {
+    final AuthStore authStore = AuthStore();
     return Observer(builder: (_) {
       return SizedBox(
         width: 342,
@@ -54,46 +59,33 @@ class AuthScreenWidgets {
           focusNode: FocusNode(),
           autofocus: true,
           controller: passwordInputController,
-          style: TextStyle(
-            color: Color(0XFFBDBDBD),
-            fontSize: 16,
-            fontFamily: 'Inter',
-            fontWeight: FontWeight.w400,
-          ),
+          style: textInputStyle,
           textInputAction: TextInputAction.done,
           obscureText: authStore.isObscure,
           decoration: InputDecoration(
-            hintText: "Senha",
-            hintStyle: TextStyle(
-              color: Color(0XFFBDBDBD),
-              fontSize: 16,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w400,
-            ),
-            suffixIcon: Padding(
-              padding: EdgeInsets.fromLTRB(30, 14, 16, 14),
-              child: GestureDetector(
-                onTap: () {
-                  //fazer funcionar
-                  authStore.changeObscureText();
-                },
-                child: Text(
-                  "Show",
-                  style: TextStyle(
-                    color: Color(0XFF5DB075),
-                    fontSize: 16,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w400,
+            hintText: confirmarSenha ? "Confirmar Senha" : "Senha",
+            hintStyle: textInputStyle,
+            suffixIcon: confirmarSenha
+                ? null
+                : Padding(
+                    padding: const EdgeInsets.fromLTRB(30, 14, 16, 14),
+                    child: GestureDetector(
+                      onTap: () {
+                        //fazer funcionar
+                        authStore.changeObscureText();
+                      },
+                      child: Text(
+                        "Show",
+                        style: selectableTextStyle,
+                      ),
+                    ),
                   ),
-                ),
-              ),
-            ),
-            suffixIconConstraints: BoxConstraints(
+            suffixIconConstraints: const BoxConstraints(
               maxHeight: 50,
             ),
             isDense: true,
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: 16,
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 0,
               vertical: 14,
             ),
           ),
@@ -103,13 +95,13 @@ class AuthScreenWidgets {
   }
 
   /// Section Widget
-  Widget buildLoginButton(BuildContext context) {
+  Widget buildAuthButton(BuildContext context, String label) {
     return SizedBox(
       width: double.maxFinite,
       height: 50,
       child: ElevatedButton(
         style: ElevatedButton.styleFrom(
-          backgroundColor: Color(0XFF5DB075),
+          backgroundColor: const Color(0XFF5DB075),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(
               24,
@@ -119,7 +111,7 @@ class AuthScreenWidgets {
             vertical: -4,
             horizontal: -4,
           ),
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             horizontal: 30,
             vertical: 14,
           ),
@@ -129,13 +121,8 @@ class AuthScreenWidgets {
           Modular.to.pushNamed('/home/');
         },
         child: Text(
-          "Login",
-          style: TextStyle(
-            color: Color(0XFFFFFFFF),
-            fontSize: 16,
-            fontFamily: 'Inter',
-            fontWeight: FontWeight.w400,
-          ),
+          label,
+          style: buttonTextStyle,
         ),
       ),
     );
@@ -152,18 +139,13 @@ class AuthScreenWidgets {
         children: [
           Text(
             "Login",
-            style: TextStyle(
-              color: Color(0XFF000000),
-              fontSize: 30,
-              fontFamily: 'Inter',
-              fontWeight: FontWeight.w400,
-            ),
+            style: titleStyle,
           ),
-          SizedBox(height: 28),
-          buildEmailInput(context, emailInputController),
-          SizedBox(height: 16),
-          buildPasswordInput(context, passwordInputController),
-          SizedBox(height: 16),
+          const SizedBox(height: 28),
+          buildEmailInput(context, emailInputController, "Login"),
+          const SizedBox(height: 16),
+          buildPasswordInput(context, passwordInputController, false),
+          const SizedBox(height: 16),
           GestureDetector(
             onTap: () {
               Modular.to.pushNamed(
@@ -171,17 +153,12 @@ class AuthScreenWidgets {
             },
             child: Text(
               "Esqueceu sua senha?",
-              style: TextStyle(
-                color: Color(0XFF5DB075),
-                fontSize: 16,
-                fontFamily: 'Inter',
-                fontWeight: FontWeight.w400,
-              ),
+              style: selectableTextStyle,
             ),
           ),
-          SizedBox(height: 124),
-          buildLoginButton(context),
-          SizedBox(height: 16),
+          const SizedBox(height: 124),
+          buildAuthButton(context, "Login"),
+          const SizedBox(height: 16),
           GestureDetector(
               onTap: () {
                 Modular.to.pushNamed('/register/');
@@ -191,27 +168,66 @@ class AuthScreenWidgets {
                   children: [
                     TextSpan(
                       text: "Não tem conta? ",
-                      style: TextStyle(
-                        color: Color(0XFF5DB075),
-                        fontSize: 16,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w400,
-                      ),
+                      style: selectableTextStyle,
                     ),
                     TextSpan(
                       text: "Cadastre-se",
-                      style: TextStyle(
-                        color: Color(0XFF5DB075),
-                        fontSize: 16,
-                        fontFamily: 'Inter',
-                        fontWeight: FontWeight.w400,
-                        decoration: TextDecoration.underline,
-                      ),
+                      style: selectableTextStyle.copyWith(decoration: TextDecoration.underline),
                     )
                   ],
                 ),
                 textAlign: TextAlign.left,
               ))
+        ],
+      ),
+    );
+  }
+
+  Widget buildSigninForm(
+      BuildContext context,
+      TextEditingController usernameInputController,
+      TextEditingController emailInputController,
+      TextEditingController passwordInputController,
+      TextEditingController confirmPasswordInputController) {
+    return SizedBox(
+      width: double.maxFinite,
+      child: Column(
+        children: [
+          Text(
+            "Cadastre-se",
+            style: titleStyle,
+          ),
+          const SizedBox(height: 28),
+          buildEmailInput(context, usernameInputController, "Nome de Usuário"),
+          const SizedBox(height: 16),
+          buildEmailInput(context, emailInputController, "Email"),
+          const SizedBox(height: 16),
+          buildPasswordInput(context, passwordInputController, false),
+          const SizedBox(height: 16),
+          buildPasswordInput(context, confirmPasswordInputController, true),
+          const SizedBox(height: 124),
+          buildAuthButton(context, "Cadastre-se"),
+          const SizedBox(height: 16),
+          GestureDetector(
+            onTap: () {
+              Modular.to.pushNamed('/');
+            },
+            child: RichText(
+              text: TextSpan(
+                children: [
+                  TextSpan(
+                    text: "Já tem uma conta? ",
+                    style:selectableTextStyle,
+                  ),
+                  TextSpan(
+                    text: "Acesse-a",
+                    style: selectableTextStyle.copyWith(decoration: TextDecoration.underline),
+                  )
+                ],
+              ),
+              textAlign: TextAlign.left,
+            ),
+          ),
         ],
       ),
     );
