@@ -2,19 +2,24 @@ import 'package:estudo_flutter/modules/consulta_cep/presentation/stores/busca_ce
 import 'package:estudo_flutter/shared/mobx/loading_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart'; // ignore_for_file: must_be_immutable
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:estudo_flutter/shared/widgets/global_themes.dart';
+import 'package:estudo_flutter/shared/widgets/global_widgets.dart';
 
 class BuscaCepPage extends StatefulWidget {
+  const BuscaCepPage({super.key});
   @override
   _BuscaCepPageState createState() => _BuscaCepPageState();
 }
+final GlobalWidgets widgets = GlobalWidgets();
+final ThemeColors themeColors = ThemeColors();
 
 class _BuscaCepPageState extends State<BuscaCepPage> {
   final loadingStore = LoadingStore();
   final TextEditingController _textController = TextEditingController();
   String _displayText = '';
   final BuscaCepStore _buscaCepStore = Modular.get<BuscaCepStore>();
-  
+
   Future<void> _confirmText() async {
     loadingStore.isLoading = true;
     final String cep = _textController.text;
@@ -33,15 +38,16 @@ class _BuscaCepPageState extends State<BuscaCepPage> {
       });
     }
   }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0XFFFFFFFF),
+        backgroundColor: themeColors.white,
         resizeToAvoidBottomInset: false,
         body: Container(
           width: double.maxFinite,
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             left: 36,
             top: 62,
             right: 36,
@@ -50,139 +56,76 @@ class _BuscaCepPageState extends State<BuscaCepPage> {
             children: [
               Text(
                 "BuscaCep",
-                style: TextStyle(
-                  color: Color(0XFF272727),
-                  fontSize: 30,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w400,
-                ),
+                style: widgets.titleStyle,
               ),
-              SizedBox(height: 86),
+              const SizedBox(height: 86),
               SizedBox(
                 width: 302,
                 child: TextFormField(
                   focusNode: FocusNode(),
                   autofocus: true,
                   controller: _textController,
-                  style: TextStyle(
-                    color: Color(0XFFBDBDBD),
-                    fontSize: 16,
-                    fontFamily: 'Inter',
-                    fontWeight: FontWeight.w500,
-                  ),
+                  style: widgets.textInputStyle,
                   textInputAction: TextInputAction.done,
                   decoration: InputDecoration(
                     hintText: "Digite o CEP para a busca",
-                    hintStyle: TextStyle(
-                      color: Color(0XFFBDBDBD),
-                      fontSize: 16,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w500,
-                    ),
+                    hintStyle: widgets.textInputStyle,
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(
                         22,
                       ),
                       borderSide: BorderSide(
-                        color: Color(0XFFE8E8E8),
+                        color: themeColors.greyWhite,
                         width: 1,
                       ),
                     ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                        22,
-                      ),
-                      borderSide: BorderSide(
-                        color: Color(0XFFE8E8E8),
-                        width: 1,
-                      ),
-                    ),
-                    disabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                        22,
-                      ),
-                      borderSide: BorderSide(
-                        color: Color(0XFFE8E8E8),
-                        width: 1,
-                      ),
-                    ),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                        22,
-                      ),
-                      borderSide: BorderSide(
-                        color: Color(0XFFE8E8E8),
-                        width: 1,
-                      ),
-                    ),
+                    focusedBorder: widgets.outlineBorder,
+                    disabledBorder: widgets.outlineBorder,
+                    border: widgets.outlineBorder,
                     filled: true,
-                    fillColor: Color(0XFFF6F6F6),
+                    //fillColor: themeColors.greyWhite,
+                    fillColor: const Color(0XFFF6F6F6),
                     isDense: true,
-                    contentPadding: EdgeInsets.symmetric(
+                    contentPadding: const EdgeInsets.symmetric(
                       horizontal: 16,
                       vertical: 12,
                     ),
                   ),
                 ),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               Container(
                 width: double.maxFinite,
                 height: 32,
-                margin: EdgeInsets.only(
+                margin: const EdgeInsets.only(
                   left: 30,
                   right: 28,
                 ),
                 child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0XFF5DB074),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(
-                        16,
-                      ),
-                    ),
-                    visualDensity: const VisualDensity(
-                      vertical: -4,
-                      horizontal: -4,
-                    ),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 30,
-                      vertical: 6,
-                    ),
-                  ),
+                  style: widgets.elevatedButtonStyle,
                   onPressed: () {
                     _confirmText();
                   },
                   child: Text(
                     "Buscar",
-                    style: TextStyle(
-                      color: Color(0XFFFFFFFF),
-                      fontSize: 16,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w600,
-                    ),
+                    style: widgets.buttonTextStyle,
                   ),
                 ),
               ),
-              SizedBox(height: 40),
+              const SizedBox(height: 40),
               Observer(builder: (_) {
-              LoadingStore loadingStore = LoadingStore();
-              if (loadingStore.isLoading) {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              } else {
-                return Text(
-                  _displayText,
-                  style: const TextStyle(
-                      color: Color(0XFFBDBDBD),
-                      fontSize: 16,
-                      fontFamily: 'Inter',
-                      fontWeight: FontWeight.w500,
-                    ),
-                );
-              }
-            }),
+                LoadingStore loadingStore = LoadingStore();
+                if (loadingStore.isLoading) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  return Text(
+                    _displayText,
+                    style: widgets.textInputStyle,
+                  );
+                }
+              }),
             ],
           ),
         ),

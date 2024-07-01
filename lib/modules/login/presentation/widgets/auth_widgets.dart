@@ -11,6 +11,7 @@ class AuthScreenWidgets {
   TextStyle selectableTextStyle = GlobalWidgets().selectableTextStyle;
   TextStyle buttonTextStyle = GlobalWidgets().buttonTextStyle;
   TextStyle titleStyle = GlobalWidgets().titleStyle;
+  ButtonStyle elevatedButtonStyle = GlobalWidgets().elevatedButtonStyle;
 
   Widget buildTextInput(BuildContext context,
       TextEditingController emailInputController, String label) {
@@ -82,22 +83,7 @@ class AuthScreenWidgets {
       width: double.maxFinite,
       height: 50,
       child: ElevatedButton(
-        style: ElevatedButton.styleFrom(
-          backgroundColor: const Color(0XFF5DB075),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(
-              24,
-            ),
-          ),
-          visualDensity: const VisualDensity(
-            vertical: -4,
-            horizontal: -4,
-          ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 30,
-            vertical: 14,
-          ),
-        ),
+        style: elevatedButtonStyle,
         onPressed: () {
           //Envia p/ store
           Modular.to.pushNamed('/home/');

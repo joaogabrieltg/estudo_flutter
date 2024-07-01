@@ -7,7 +7,7 @@ import 'package:estudo_flutter/modules/user/user_module.dart';
 class HomeModule extends Module {
   @override
   void routes(r) {
-    r.child('/', child: (context) => const HomePage());
+    r.child('/', child: (context) => HomePage());
     r.module('/busca_cep/', module: ConsultaCepModule());
     r.module('/user', module: UserModule());
   }

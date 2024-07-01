@@ -4,7 +4,7 @@ import '../widgets/user_widgets.dart';
 class UserPage extends StatelessWidget {
     UserPage({super.key});
     
-  UserWidgets widgets = UserWidgets();
+  final UserWidgets widgets = UserWidgets();
   @override
   Widget build(BuildContext context) {
     return SafeArea(

@@ -1,22 +1,22 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'package:estudo_flutter/shared/widgets/global_themes.dart';
+import 'package:estudo_flutter/shared/widgets/global_widgets.dart';
+
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key})
-      : super(
-          key: key,
-        );
+  HomePage({super.key});
+
+final GlobalWidgets widgets = GlobalWidgets();
+final ThemeColors themeColors = ThemeColors();
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Color(0XFFFFFFFF),
+        backgroundColor: themeColors.white,
         body: Container(
           width: double.maxFinite,
-          padding: EdgeInsets.only(
+          padding: const EdgeInsets.only(
             left: 32,
             top: 62,
             right: 32,
@@ -25,107 +25,49 @@ class HomePage extends StatelessWidget {
             children: [
               Text(
                 "BuscaCep",
-                style: TextStyle(
-                  color: Color(0XFF272727),
-                  fontSize: 30,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w400,
-                ),
+                style: widgets.titleStyle,
               ),
-              SizedBox(height: 42),
+              const SizedBox(height: 42),
               Container(
                 width: double.maxFinite,
-                margin: EdgeInsets.only(right: 4),
-                child: _buildSelection(
+                margin: const EdgeInsets.only(right: 4),
+                child: widgets.buildSelection(
                   context,
                   text: "Perfil",
                   iconData: Icons.person,
                   route: '/user',
+                  returnable: true,
                 ),
               ),
-              SizedBox(height: 14),
+              const SizedBox(height: 14),
               Container(
                 width: double.maxFinite,
-                margin: EdgeInsets.only(right: 4),
-                child: _buildSelection(
+                margin: const EdgeInsets.only(right: 4),
+                child: widgets.buildSelection(
                   context,
                   text: "Busca Cep",
                   iconData: Icons.search,
                   route: '/busca_cep',
+                  returnable: true,
                 ),
               ),
-              SizedBox(height: 14),
+              const SizedBox(height: 14),
               Container(
                 width: double.maxFinite,
-                margin: EdgeInsets.only(right: 4),
-                child: _buildSelection(
+                margin: const EdgeInsets.only(right: 4),
+                child: widgets.buildSelection(
                   context,
                   text: "Histórico de Busca",
                   iconData: Icons.history,
                   route: '/busca_cep/history',
+                  returnable: true,
                 ),
               ),
-              SizedBox(height: 4)
+              const SizedBox(height: 4)
             ],
           ),
         ),
       ),
     );
   }
-
-  /// Common widget
-Widget _buildSelection(
-  BuildContext context, {
-  required String text,
-  required IconData iconData,
-  required String route,
-}) {
-  return GestureDetector(
-    onTap: () {
-      Modular.to.pushNamed(route);
-    },
-    child: Container(
-      color: Colors.transparent, // Add a transparent color to ensure the GestureDetector is effective over the entire row area.
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: 48,
-            height: 48,
-            decoration: BoxDecoration(
-              color: Color(0XFF91C788),
-              borderRadius: BorderRadius.circular(
-                8,
-              ),
-            ),
-            padding: EdgeInsets.all(12),
-            child: Icon(
-              iconData,
-              color: Color(0XFFFFFFFF),
-              size: 24,
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(left: 16),
-            child: Text(
-              text,
-              style: TextStyle(
-                color: Color(0XFF707070),
-                fontSize: 17,
-                fontFamily: 'Signika',
-                fontWeight: FontWeight.w400,
-              ),
-            ),
-          ),
-          Spacer(),
-          Icon(
-            Icons.arrow_forward_ios,
-            color: Color(0XFF5DB075),
-            size: 24,
-          ),
-        ],
-      ),
-    ),
-  );
-}
 }
