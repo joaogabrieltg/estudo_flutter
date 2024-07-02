@@ -3,8 +3,7 @@ import 'package:estudo_flutter/modules/consulta_cep/presentation/stores/cep_hist
 import 'package:flutter_modular/flutter_modular.dart';
 
 class CepHistoryPage extends StatefulWidget {
-  const CepHistoryPage({Key? key}) : super(key: key);
-
+  const CepHistoryPage({super.key});
   @override
   _CepHistoryPageState createState() => _CepHistoryPageState();
 }
