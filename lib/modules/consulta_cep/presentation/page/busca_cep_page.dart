@@ -172,7 +172,7 @@ class _BuscaCepPageState extends State<BuscaCepPage> {
                 hint: const Text("Selecione o Estado"),
                 value: estadoSelecionado,
                 onChanged: (newValue) {
-                  setState(() {
+                  setState(() {  //usar mobx
                     estadoSelecionado = newValue;
                     cidades = estados
                         .firstWhere((estado) => estado.sigla == newValue)
