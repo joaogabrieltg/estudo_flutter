@@ -57,6 +57,18 @@ final ThemeColors themeColors = ThemeColors();
                 margin: const EdgeInsets.only(right: 4),
                 child: widgets.buildSelection(
                   context,
+                  text: "Busca por Endereço",
+                  iconData: Icons.location_on,
+                  route: '/busca_cep/endereco',
+                  returnable: true,
+                ),
+              ),
+              const SizedBox(height: 14),
+              Container(
+                width: double.maxFinite,
+                margin: const EdgeInsets.only(right: 4),
+                child: widgets.buildSelection(
+                  context,
                   text: "Histórico de Busca",
                   iconData: Icons.history,
                   route: '/busca_cep/history',

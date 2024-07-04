@@ -4,31 +4,31 @@ import 'package:estudo_flutter/shared/mobx/cidade_estado_store.dart';
 import 'package:estudo_flutter/shared/mobx/loading_store.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:estudo_flutter/shared/widgets/global_themes.dart';
 import 'package:estudo_flutter/shared/widgets/global_widgets.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
-class BuscaCepPage extends StatefulWidget {
-  const BuscaCepPage({super.key});
+class BuscaLogradouroPage extends StatefulWidget {
+  const BuscaLogradouroPage({super.key});
   @override
-  _BuscaCepPageState createState() => _BuscaCepPageState();
+  _BuscaLogradouroPageState createState() => _BuscaLogradouroPageState();
 }
 
 final GlobalWidgets widgets = GlobalWidgets();
 final ThemeColors themeColors = ThemeColors();
 
-class _BuscaCepPageState extends State<BuscaCepPage> {
+class _BuscaLogradouroPageState extends State<BuscaLogradouroPage> {
   final loadingStore = LoadingStore();
-  final TextEditingController _textController = TextEditingController();
-  String _displayText = '';
-  final BuscaCepStore _buscaCepStore = Modular.get<BuscaCepStore>();
+  final TextEditingController _textController2 = TextEditingController();
   final CidadeEstadoStore buscaCepPageStore = CidadeEstadoStore();
   BuscaWidgets buscaWidgets = BuscaWidgets();
+  String _displayText = '';
+  final BuscaCepStore _buscaCepStore = Modular.get<BuscaCepStore>();
 
 
   Future<void> _confirmText() async {
     loadingStore.isLoading = true;
-    final String cep = _textController.text;
+    final String cep = _textController2.text;
     try {
       final String cepText = await _buscaCepStore.getText(cep);
       await Future.delayed(const Duration(seconds: 1));
@@ -65,23 +65,23 @@ class _BuscaCepPageState extends State<BuscaCepPage> {
                 style: widgets.titleStyle,
               ),
               const SizedBox(height: 86),
-              buscaWidgets.buildCepInput(_textController, "Digite o CEP para a busca"),
-              const SizedBox(height: 10),
-              buscaWidgets.confirmButton(true, _confirmText, _textController, buscaCepPageStore),
-              const SizedBox(height: 40),
-              Observer(builder: (_) {
-                LoadingStore loadingStore = LoadingStore();
-                if (loadingStore.isLoading) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                } else {
-                  return Text(
-                    _displayText,
-                    style: widgets.textInputStyle,
-                  );
-                }
-              }),
+              buscaWidgets.buildEstadoCidadeSelecao(_textController2, _confirmText, buscaCepPageStore),
+              Observer(
+                builder: (_) {
+                  if (buscaCepPageStore.cidadeSelecionada != null) {
+                    return Column(
+                      children: [
+                        buscaWidgets.buildCepInput(_textController2,
+                            "Digite o Logradouro para a busca"),
+                        const SizedBox(height: 10),
+                        buscaWidgets.confirmButton(false, _confirmText,_textController2, buscaCepPageStore),
+                      ],
+                    );
+                  } else {
+                    return Container(); // Ou qualquer outro widget para o estado inicial
+                  }
+                },
+              ),
               Container(),
             ],
           ),
@@ -89,4 +89,5 @@ class _BuscaCepPageState extends State<BuscaCepPage> {
       ),
     );
   }
+
 }
