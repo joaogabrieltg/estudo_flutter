@@ -1,8 +1,7 @@
 import 'package:estudo_flutter/modules/consulta_cep/presentation/stores/busca_cep_store.dart';
+import 'package:estudo_flutter/shared/mobx/cidade_estado_store.dart';
 import 'package:estudo_flutter/shared/mobx/loading_store.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:estudo_flutter/shared/widgets/global_themes.dart';
@@ -23,9 +22,10 @@ class _BuscaCepPageState extends State<BuscaCepPage> {
   final TextEditingController _textController2 = TextEditingController();
   String _displayText = '';
   final BuscaCepStore _buscaCepStore = Modular.get<BuscaCepStore>();
-  String? estadoSelecionado;
-  String? cidadeSelecionada;
-  List<String> cidades = [];
+  //String? estadoSelecionado;
+  //String? cidadeSelecionada;
+  //List<String> cidades = [];
+  final CidadeEstadoStore buscaCepPageStore = CidadeEstadoStore();
 
   Future<void> _confirmText() async {
     loadingStore.isLoading = true;
@@ -86,6 +86,22 @@ class _BuscaCepPageState extends State<BuscaCepPage> {
               Container(
                 child: buildEstadoCidadeSelecao(),
               ),
+              Observer(
+                builder: (_) {
+                  if (buscaCepPageStore.cidadeSelecionada != null) {
+                    return Column(
+                      children: [
+                        buildCepInput(_textController2,
+                            "Digite o Logradouro para a busca"),
+                        const SizedBox(height: 10),
+                        confirmButton(false),
+                      ],
+                    );
+                  } else {
+                    return Container(); // Ou qualquer outro widget para o estado inicial
+                  }
+                },
+              ),
               Container(),
             ],
           ),
@@ -145,7 +161,8 @@ class _BuscaCepPageState extends State<BuscaCepPage> {
             _confirmText();
           } else {
             // Implementar ação após seleção da cidade
-            print('$estadoSelecionado/$cidadeSelecionada/${_textController2.text}');
+            print(
+                '${buscaCepPageStore.estadoSelecionado}/${buscaCepPageStore.cidadeSelecionada}/${_textController2.text}');
           }
         },
         child: Text(
@@ -168,50 +185,55 @@ class _BuscaCepPageState extends State<BuscaCepPage> {
           List<Estado> estados = snapshot.data!;
           return Column(
             children: [
-              DropdownButton<String>(
-                hint: const Text("Selecione o Estado"),
-                value: estadoSelecionado,
-                onChanged: (newValue) {
-                  setState(() {  //usar mobx
-                    estadoSelecionado = newValue;
-                    cidades = estados
-                        .firstWhere((estado) => estado.sigla == newValue)
-                        .cidades;
-                  });
-                },
-                items: estados.map<DropdownMenuItem<String>>((Estado estado) {
-                  return DropdownMenuItem<String>(
-                    value: estado.sigla,
-                    child: Text(estado.nome),
-                  );
-                }).toList(),
+              Observer(
+                  builder: (_) => DropdownButton<String>(
+                        hint: const Text("Selecione o Estado"),
+                        value: buscaCepPageStore.estadoSelecionado,
+                        onChanged: (newValue) {
+                          buscaCepPageStore.setEstadoSelecionado(newValue);
+                          buscaCepPageStore.setCidades(estados
+                              .firstWhere((estado) => estado.sigla == newValue)
+                              .cidades);
+                        },
+                        items: estados
+                            .map<DropdownMenuItem<String>>((Estado estado) {
+                          return DropdownMenuItem<String>(
+                            value: estado.sigla,
+                            child: Text(estado.nome),
+                          );
+                        }).toList(),
+                      )),
+              Observer(
+                builder: (_) => DropdownButton<String>(
+                  hint: const Text("Selecione a Cidade"),
+                  value: buscaCepPageStore.cidades.isNotEmpty
+                      ? buscaCepPageStore.cidadeSelecionada
+                      : null,
+                  onChanged: buscaCepPageStore.cidades.isNotEmpty
+                      ? (newValue) {
+                          buscaCepPageStore.setCidadeSelecionada(newValue);
+                          // Implementar ação após seleção da cidade
+                          print(
+                              '${buscaCepPageStore.estadoSelecionado}/${buscaCepPageStore.cidadeSelecionada}/${_textController2.text}');
+                          Column(
+                            children: [
+                              buildCepInput(_textController2,
+                                  "Digite o Logradouro para a busca"),
+                              const SizedBox(height: 10),
+                              confirmButton(false),
+                            ],
+                          );
+                        }
+                      : null,
+                  items: buscaCepPageStore.cidades
+                      .map<DropdownMenuItem<String>>((String cidade) {
+                    return DropdownMenuItem<String>(
+                      value: cidade,
+                      child: Text(cidade),
+                    );
+                  }).toList(),
+                ),
               ),
-              DropdownButton<String>(
-                hint: const Text("Selecione a Cidade"),
-                value: cidades.isNotEmpty ? cidadeSelecionada : null,
-                onChanged: cidades.isNotEmpty
-                    ? (newValue) {
-                        setState(() {
-                          cidadeSelecionada = newValue;
-                        });
-                        // Implementar ação após seleção da cidade
-                        print('$estadoSelecionado/$cidadeSelecionada/');
-                      }
-                    : null,
-                items: cidades.map<DropdownMenuItem<String>>((String cidade) {
-                  return DropdownMenuItem<String>(
-                    value: cidade,
-                    child: Text(cidade),
-                  );
-                }).toList(),
-              ),
-              cidadeSelecionada != null
-                  ? Column(children: [
-                      buildCepInput(_textController2, "Digite o logradouro para a busca"),
-                      const SizedBox(height: 10),
-                      confirmButton(false),
-                    ])
-                  : Container(),
             ],
           );
         } else {
