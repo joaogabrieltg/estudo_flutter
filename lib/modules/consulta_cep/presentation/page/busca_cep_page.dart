@@ -67,7 +67,7 @@ class _BuscaCepPageState extends State<BuscaCepPage> {
               const SizedBox(height: 86),
               buscaWidgets.buildCepInput(_textController, "Digite o CEP para a busca"),
               const SizedBox(height: 10),
-              buscaWidgets.confirmButton(true, _confirmText, _textController, buscaCepPageStore),
+              buscaWidgets.confirmButton(_confirmText),
               const SizedBox(height: 40),
               Observer(builder: (_) {
                 LoadingStore loadingStore = LoadingStore();

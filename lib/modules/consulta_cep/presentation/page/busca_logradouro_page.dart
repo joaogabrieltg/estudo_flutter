@@ -29,9 +29,11 @@ class _BuscaLogradouroPageState extends State<BuscaLogradouroPage> {
   Future<void> _confirmText() async {
     loadingStore.isLoading = true;
     final String cep = _textController2.text;
+    print('${buscaCepPageStore.estadoSelecionado}/${buscaCepPageStore.cidadeSelecionada}/${_textController2.text}');
     try {
       final String cepText = await _buscaCepStore.getText(cep);
       await Future.delayed(const Duration(seconds: 1));
+       
       setState(() {
         loadingStore.isLoading = false;
         _displayText = cepText;
@@ -74,7 +76,7 @@ class _BuscaLogradouroPageState extends State<BuscaLogradouroPage> {
                         buscaWidgets.buildCepInput(_textController2,
                             "Digite o Logradouro para a busca"),
                         const SizedBox(height: 10),
-                        buscaWidgets.confirmButton(false, _confirmText,_textController2, buscaCepPageStore),
+                        buscaWidgets.confirmButton(_confirmText),
                       ],
                     );
                   } else {

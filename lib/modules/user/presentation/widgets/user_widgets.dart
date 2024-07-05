@@ -52,7 +52,7 @@ class UserWidgets {
             child: ElevatedButton(
               style: widgets.elevatedButtonStyle,
               onPressed: () {
-                 Modular.to.pushNamed('/');
+                 Modular.to.navigate('/');
               },
               child: Text(
                 "Sim, tenho!",
@@ -134,7 +134,7 @@ class UserWidgets {
           const SizedBox(height: 16),
           GestureDetector(
             onTap: () {
-              Modular.to.pushNamed('/');
+              Modular.to.navigate('/');
             },
             child: Text(
             "Excluir conta",

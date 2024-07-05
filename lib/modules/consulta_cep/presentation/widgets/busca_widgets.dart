@@ -51,7 +51,7 @@ class BuscaWidgets{
         ));
   }
 
-  Widget confirmButton(bool buscaPorCep, Future<void> _confirmText(), TextEditingController _textController2, CidadeEstadoStore buscaCepPageStore) {
+  Widget confirmButton(Future<void> _confirmText()) {
     return Container(
       width: double.maxFinite,
       height: 32,
@@ -62,13 +62,7 @@ class BuscaWidgets{
       child: ElevatedButton(
         style: widgets.elevatedButtonStyle,
         onPressed: () {
-          if (buscaPorCep) {
             _confirmText();
-          } else {
-            // Implementar ação após seleção da cidade
-            print(
-                '${buscaCepPageStore.estadoSelecionado}/${buscaCepPageStore.cidadeSelecionada}/${_textController2.text}');
-          }
         },
         child: Text(
           "Buscar",
@@ -126,7 +120,7 @@ class BuscaWidgets{
                               buildCepInput(_textController2,
                                   "Digite o Logradouro para a busca"),
                               const SizedBox(height: 10),
-                              confirmButton(false, _confirmText, _textController2, buscaCepPageStore),
+                              confirmButton(_confirmText),
                             ],
                           );
                         }
