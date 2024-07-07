@@ -22,27 +22,28 @@ class _BuscaLogradouroPageState extends State<BuscaLogradouroPage> {
   final TextEditingController _textController2 = TextEditingController();
   final CidadeEstadoStore buscaCepPageStore = CidadeEstadoStore();
   BuscaWidgets buscaWidgets = BuscaWidgets();
-  String _displayText = '';
+  List<String> _displayText = []; // Passo 1: Alterar para List<String>
   final BuscaCepStore _buscaCepStore = Modular.get<BuscaCepStore>();
-
 
   Future<void> _confirmText() async {
     loadingStore.isLoading = true;
-    final String cep = _textController2.text;
-    print('${buscaCepPageStore.estadoSelecionado}/${buscaCepPageStore.cidadeSelecionada}/${_textController2.text}');
+    String cep = _textController2.text;
+    cep = '${buscaCepPageStore.estadoSelecionado}/${buscaCepPageStore.cidadeSelecionada}/${_textController2.text}';
+    print('https://viacep.com.br/ws/$cep/json/');
     try {
-      final String cepText = await _buscaCepStore.getText(cep);
+      // Passo 2: Modificar para receber uma lista de strings
+      final List<String> cepTextList = await _buscaCepStore.getList(cep); // Supondo que getText agora retorna List<String>
       await Future.delayed(const Duration(seconds: 1));
        
       setState(() {
         loadingStore.isLoading = false;
-        _displayText = cepText;
+        _displayText = cepTextList; // Atualizar _displayText com a lista recebida
       });
     } catch (e) {
       await Future.delayed(const Duration(seconds: 2));
       setState(() {
         loadingStore.isLoading = false;
-        _displayText = 'Erro ao fazer a requisição. Detalhes: $e';
+        _displayText = ['Erro ao fazer a requisição. Detalhes: $e']; // Usar uma lista aqui também
       });
     }
   }
@@ -84,12 +85,18 @@ class _BuscaLogradouroPageState extends State<BuscaLogradouroPage> {
                   }
                 },
               ),
-              Container(),
+              Expanded(
+                child: ListView.builder(
+                  itemCount: _displayText.length,
+                  itemBuilder: (context, index) {
+                    return Text(_displayText[index]); // Exibir cada item da lista
+                  },
+                ),
+              ),
             ],
           ),
         ),
       ),
     );
   }
-
 }

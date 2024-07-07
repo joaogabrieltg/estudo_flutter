@@ -1,4 +1,5 @@
 class CepModel {
+  final String cep;
   final String logradouro;
   final String bairro;
   final String localidade;
@@ -6,6 +7,7 @@ class CepModel {
   final String ddd;
 
   CepModel({
+    required this.cep,
     required this.logradouro,
     required this.bairro,
     required this.localidade,
@@ -15,6 +17,7 @@ class CepModel {
 
   factory CepModel.fromJson(Map<String, dynamic> json) {
     return CepModel(
+      cep: json['cep'] ?? '',
       logradouro: json['logradouro'] ?? '',
       bairro: json['bairro'] ?? '',
       localidade: json['localidade'] ?? '',

@@ -21,6 +21,25 @@ class BuscaCepStore {
     return 'Logradouro: ${cepModel.logradouro}\nBairro: ${cepModel.bairro}\nLocalidade: ${cepModel.localidade}\nUF: ${cepModel.uf}\nDDD: ${cepModel.ddd}';
   }
 
+    Future<List<String>> getList(cep) async {
+    final List<CepModel> cepModel = await _buscaCepCase.getCepList(cep);
+    List<String> cepDataList = [];
+    for (var cep in cepModel) {
+      final cepData = {
+        'cep': cep.cep,
+        'logradouro': cep.logradouro,
+        'bairro': cep.bairro,
+        'localidade': cep.localidade,
+        'uf': cep.uf,
+        'ddd': cep.ddd,
+      };
+      cepDataList.add('CEP: ${cep.cep}\nLogradouro: ${cep.logradouro}\nBairro: ${cep.bairro}\nLocalidade: ${cep.localidade}\nUF: ${cep.uf}\nDDD: ${cep.ddd}\n\n');
+      _buscaCepCase.addToDatabase(cepData);
+    }
+    return cepDataList;
+  }
+
+
   Future<List<Estado>> carregarEstadosCidades() async {
     String response = await rootBundle.loadString('lib/shared/assets/data/estados_cidades.json');
     var data = json.decode(response);

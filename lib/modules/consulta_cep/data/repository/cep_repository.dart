@@ -9,4 +9,10 @@ class CepRepository extends CepRepositoryInterface {
   Future<CepModel> getCep(String cep) async {
     return await _cepRemoteDatasourceInterface.getCep(cep);
   }
+  
+  @override
+  Future<List<CepModel>> getCepList(String cep) async {
+    return await _cepRemoteDatasourceInterface.getCepList(cep);
+
+  }
 }

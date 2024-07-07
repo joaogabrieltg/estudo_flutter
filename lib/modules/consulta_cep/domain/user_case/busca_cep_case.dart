@@ -15,6 +15,14 @@ class BuscaCepCase {
       throw Exception('Erro ao fazer a requisição. Detalhes: $e');
     }
   }
+  Future<List<CepModel>> getCepList(cep) async {
+    try {
+      final List<CepModel> cepModel = await _cepRepositoryInterface.getCepList(cep);
+      return cepModel;
+    } catch (e) {
+      throw Exception('Erro ao fazer a requisição. Detalhes: $e');
+    }
+  }
   Future<void> addToDatabase(Map<String, dynamic> cepData){
     return _cepDbRepositoryInterface.addToDatabase(cepData);
   }
