@@ -1,3 +1,4 @@
+import 'package:estudo_flutter/modules/consulta_cep/domain/entities/estado_entities.dart';
 import 'package:estudo_flutter/modules/consulta_cep/presentation/stores/busca_cep_store.dart';
 import 'package:estudo_flutter/shared/mobx/cidade_estado_store.dart';
 import 'package:estudo_flutter/shared/mobx/loading_store.dart';
@@ -11,9 +12,8 @@ class BuscaWidgets{
   final GlobalWidgets widgets = GlobalWidgets();
   final ThemeColors themeColors = ThemeColors();
   final BuscaCepStore _buscaCepStore = Modular.get<BuscaCepStore>();
-  //final CidadeEstadoStore buscaCepPageStore = CidadeEstadoStore();
   final LoadingStore loadingStore = LoadingStore();
-
+  
 
   Widget buildCepInput(TextEditingController controller, String hintText) {
     return SizedBox(
@@ -51,7 +51,7 @@ class BuscaWidgets{
         ));
   }
 
-  Widget confirmButton(Future<void> _confirmText()) {
+  Widget confirmButton(Future<void> Function() confirmText) {
     return Container(
       width: double.maxFinite,
       height: 32,
@@ -62,7 +62,7 @@ class BuscaWidgets{
       child: ElevatedButton(
         style: widgets.elevatedButtonStyle,
         onPressed: () {
-            _confirmText();
+            confirmText();
         },
         child: Text(
           "Buscar",
@@ -72,8 +72,8 @@ class BuscaWidgets{
     );
   }
 
-  Widget buildEstadoCidadeSelecao(TextEditingController _textController2, Future<void> _confirmText(), CidadeEstadoStore buscaCepPageStore) {
-    return FutureBuilder<List<Estado>>(
+  Widget buildEstadoCidadeSelecao(TextEditingController textController2, Future<void> Function() confirmText, CidadeEstadoStore buscaCepPageStore) {
+    return FutureBuilder<List<EstadoEntity>>(
       future: _buscaCepStore.carregarEstadosCidades(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -81,7 +81,7 @@ class BuscaWidgets{
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else if (snapshot.hasData) {
-          List<Estado> estados = snapshot.data!;
+          List<EstadoEntity> estados = snapshot.data!;
           return Column(
             children: [
               Observer(
@@ -96,7 +96,7 @@ class BuscaWidgets{
                               .cidades);
                         },
                         items: estados
-                            .map<DropdownMenuItem<String>>((Estado estado) {
+                            .map<DropdownMenuItem<String>>((EstadoEntity estado) {
                           return DropdownMenuItem<String>(
                             value: estado.sigla,
                             child: Text(estado.nome),
@@ -113,14 +113,13 @@ class BuscaWidgets{
                       ? (newValue) {
                           buscaCepPageStore.setCidadeSelecionada(newValue);
                           // Implementar ação após seleção da cidade
-                          print(
-                              '${buscaCepPageStore.estadoSelecionado}/${buscaCepPageStore.cidadeSelecionada}/${_textController2.text}');
+                          print('${buscaCepPageStore.estadoSelecionado}/${buscaCepPageStore.cidadeSelecionada}/${textController2.text}');
                           Column(
                             children: [
-                              buildCepInput(_textController2,
+                              buildCepInput(textController2,
                                   "Digite o Logradouro para a busca"),
                               const SizedBox(height: 10),
-                              confirmButton(_confirmText),
+                              confirmButton(confirmText),
                             ],
                           );
                         }

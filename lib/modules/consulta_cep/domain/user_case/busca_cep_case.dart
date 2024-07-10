@@ -1,4 +1,6 @@
-import '../../data/model/cep_model.dart';
+import 'package:estudo_flutter/modules/consulta_cep/domain/entities/cep_entities.dart';
+import 'package:estudo_flutter/modules/consulta_cep/domain/entities/estado_entities.dart';
+
 import '../repository/cep_repository_interface.dart';
 import '../repository/cep_db_repository_interface.dart';
 
@@ -7,18 +9,18 @@ class BuscaCepCase {
   final CepDbRepositoryInterface _cepDbRepositoryInterface;
 
   BuscaCepCase(this._cepRepositoryInterface, this._cepDbRepositoryInterface);
-  Future<CepModel> getCep(cep) async {
+  Future<CepEntity> getCep(cep) async {
     try {
-      final CepModel cepModel = await _cepRepositoryInterface.getCep(cep);
-      return cepModel;
+      final CepEntity cepEntity = await _cepRepositoryInterface.getCep(cep);
+      return cepEntity;
     } catch (e) {
       throw Exception('Erro ao fazer a requisição. Detalhes: $e');
     }
   }
-  Future<List<CepModel>> getCepList(cep) async {
+  Future<List<CepEntity>> getCepList(cep) async {
     try {
-      final List<CepModel> cepModel = await _cepRepositoryInterface.getCepList(cep);
-      return cepModel;
+      final List<CepEntity> cepEntity = await _cepRepositoryInterface.getCepList(cep);
+      return cepEntity;
     } catch (e) {
       throw Exception('Erro ao fazer a requisição. Detalhes: $e');
     }
@@ -26,4 +28,8 @@ class BuscaCepCase {
   Future<void> addToDatabase(Map<String, dynamic> cepData){
     return _cepDbRepositoryInterface.addToDatabase(cepData);
   }
+    Future<List<EstadoEntity>> carregarEstadosCidades(){
+    return _cepDbRepositoryInterface.carregarEstadosCidades();
+    }
+
 }

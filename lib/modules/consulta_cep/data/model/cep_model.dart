@@ -1,4 +1,6 @@
-class CepModel {
+import 'package:estudo_flutter/modules/consulta_cep/domain/entities/cep_entities.dart';
+
+class CepModel extends CepEntity{
   final String cep;
   final String logradouro;
   final String bairro;
@@ -13,7 +15,7 @@ class CepModel {
     required this.localidade,
     required this.uf,
     required this.ddd,
-  });
+  }) : super(cep: '', logradouro: '', bairro: '', localidade: '', uf: '', ddd: '');
 
   factory CepModel.fromJson(Map<String, dynamic> json) {
     return CepModel(

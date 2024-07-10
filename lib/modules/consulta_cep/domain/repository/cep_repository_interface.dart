@@ -1,6 +1,6 @@
-import '../../data/model/cep_model.dart';
+import 'package:estudo_flutter/modules/consulta_cep/domain/entities/cep_entities.dart';
 
 abstract class CepRepositoryInterface {
-  Future<CepModel> getCep(String cep);
-  Future<List<CepModel>> getCepList(String cep);
+  Future<CepEntity> getCep(String cep);
+  Future<List<CepEntity>> getCepList(String cep);
 }

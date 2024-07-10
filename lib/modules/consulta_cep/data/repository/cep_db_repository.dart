@@ -1,4 +1,5 @@
 import 'package:estudo_flutter/modules/consulta_cep/data/datasource/cep_local_datasource.dart';
+import 'package:estudo_flutter/modules/consulta_cep/data/model/estado_model.dart';
 import '../model/cep_model.dart';
 import '../../domain/repository/cep_db_repository_interface.dart';
 
@@ -12,6 +13,10 @@ class CepDbRepository extends CepDbRepositoryInterface {
   @override
   Future<void> deleteCep(String cep) {
     return _cepLocalDatasourceInterface.deleteCep(cep);
+  }
+  @override
+  Future<List<EstadoModel>> carregarEstadosCidades() async { //enviar pra data
+    return await _cepLocalDatasourceInterface.carregarEstadosCidades();
   }
   @override
   Future<List<Map<String, dynamic>>> getCeps() {
