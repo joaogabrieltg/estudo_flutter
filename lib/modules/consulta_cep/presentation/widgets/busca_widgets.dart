@@ -8,12 +8,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class BuscaWidgets{
+class BuscaWidgets {
   final GlobalWidgets widgets = GlobalWidgets();
   final ThemeColors themeColors = ThemeColors();
   final BuscaCepStore _buscaCepStore = Modular.get<BuscaCepStore>();
   final LoadingStore loadingStore = LoadingStore();
-  
 
   Widget buildCepInput(TextEditingController controller, String hintText) {
     return SizedBox(
@@ -62,7 +61,7 @@ class BuscaWidgets{
       child: ElevatedButton(
         style: widgets.elevatedButtonStyle,
         onPressed: () {
-            confirmText();
+          confirmText();
         },
         child: Text(
           "Buscar",
@@ -72,7 +71,10 @@ class BuscaWidgets{
     );
   }
 
-  Widget buildEstadoCidadeSelecao(TextEditingController textController2, Future<void> Function() confirmText, CidadeEstadoStore buscaCepPageStore) {
+  Widget buildEstadoCidadeSelecao(
+      TextEditingController textController2,
+      Future<void> Function() confirmText,
+      CidadeEstadoStore buscaCepPageStore) {
     return FutureBuilder<List<EstadoEntity>>(
       future: _buscaCepStore.carregarEstadosCidades(),
       builder: (context, snapshot) {
@@ -95,8 +97,8 @@ class BuscaWidgets{
                               .firstWhere((estado) => estado.sigla == newValue)
                               .cidades);
                         },
-                        items: estados
-                            .map<DropdownMenuItem<String>>((EstadoEntity estado) {
+                        items: estados.map<DropdownMenuItem<String>>(
+                            (EstadoEntity estado) {
                           return DropdownMenuItem<String>(
                             value: estado.sigla,
                             child: Text(estado.nome),
@@ -113,7 +115,8 @@ class BuscaWidgets{
                       ? (newValue) {
                           buscaCepPageStore.setCidadeSelecionada(newValue);
                           // Implementar ação após seleção da cidade
-                          print('${buscaCepPageStore.estadoSelecionado}/${buscaCepPageStore.cidadeSelecionada}/${textController2.text}');
+                          print(
+                              '${buscaCepPageStore.estadoSelecionado}/${buscaCepPageStore.cidadeSelecionada}/${textController2.text}');
                           Column(
                             children: [
                               buildCepInput(textController2,
@@ -141,4 +144,39 @@ class BuscaWidgets{
       },
     );
   }
+
+Widget buscaCard(List<Map<String, dynamic>> ceps) {
+  return ListView.builder(
+    shrinkWrap: true,
+    physics: const NeverScrollableScrollPhysics(),
+    itemCount: ceps.length,
+    itemBuilder: (context, index) {
+      final cep = ceps[index];
+      return Card(
+        child: ListTile(
+          title: Text(cep['cep'].toString()),
+          subtitle: SingleChildScrollView( // Permite rolagem se o conteúdo for muito grande
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('CEP: ${cep['cep']}'),
+                Text('Logradouro: ${cep['logradouro']}'),
+                Text('Bairro: ${cep['bairro']}'),
+                Text('Localidade: ${cep['localidade']}'),
+                Text('UF: ${cep['uf']}'),
+                Text('DDD: ${cep['ddd']}'),
+              ],
+            ),
+          ),
+          trailing: IconButton(
+            icon: const Icon(Icons.add_rounded),
+            onPressed: () {
+              _buscaCepStore.saveData(cep);
+            },
+          ),
+        ),
+      );
+    },
+  );
+}
 }

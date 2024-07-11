@@ -50,19 +50,26 @@ class _CepHistoryPageState extends State<CepHistoryPage> {
               itemBuilder: (context, index) {
                 final cep = _ceps[index];
                 return Card(
-                  child: ListTile(
-                    title: Text(cep['cep'].toString()),
-                    subtitle: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('Logradouro: ${cep['logradouro']}'),
-                        Text('Bairro: ${cep['bairro']}'),
-                        Text('Localidade: ${cep['localidade']}'),
-                        Text('UF: ${cep['uf']}'),
-                        Text('DDD: ${cep['ddd']}'),
-                      ],
-                    ),
-                  ),
+  child: ListTile(
+    title: Text(cep['cep'].toString()),
+    subtitle: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text('CEP: ${cep['cep']}'),
+        Text('Logradouro: ${cep['logradouro']}'),
+        Text('Bairro: ${cep['bairro']}'),
+        Text('Localidade: ${cep['localidade']}'),
+        Text('UF: ${cep['uf']}'),
+        Text('DDD: ${cep['ddd']}'),
+      ],
+    ),
+    trailing: IconButton(
+      icon: const Icon(Icons.auto_delete), // Escolha o ícone desejado
+      onPressed: () {
+        _cepHistoryStore.deleteCep(cep['cep']);
+      },
+    ),
+  ),
                 );
               },
             ),

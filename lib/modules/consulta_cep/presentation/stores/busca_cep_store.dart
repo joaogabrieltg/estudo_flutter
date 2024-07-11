@@ -20,9 +20,9 @@ class BuscaCepStore {
     return 'Logradouro: ${cepModel.logradouro}\nBairro: ${cepModel.bairro}\nLocalidade: ${cepModel.localidade}\nUF: ${cepModel.uf}\nDDD: ${cepModel.ddd}';
   }
 
-    Future<List<String>> getList(cep) async {
+    Future<List<Map<String, dynamic>>> getList(cep) async {
     final List<CepEntity> cepModel = await _buscaCepCase.getCepList(cep);
-    List<String> cepDataList = [];
+    List<Map<String, dynamic>> cepDataList = [];
     for (var cep in cepModel) {
       final cepData = {
         'cep': cep.cep,
@@ -32,11 +32,15 @@ class BuscaCepStore {
         'uf': cep.uf,
         'ddd': cep.ddd,
       };
-      cepDataList.add('CEP: ${cep.cep}\nLogradouro: ${cep.logradouro}\nBairro: ${cep.bairro}\nLocalidade: ${cep.localidade}\nUF: ${cep.uf}\nDDD: ${cep.ddd}\n\n');
-      _buscaCepCase.addToDatabase(cepData);
+      cepDataList.add(cepData);
     }
     return cepDataList;
   }
+
+  void saveData(Map<String, dynamic> cepData) {
+    _buscaCepCase.addToDatabase(cepData);
+  }
+
   Future<List<EstadoEntity>> carregarEstadosCidades() async { //enviar pra data
     final List<EstadoEntity> estados = await _buscaCepCase.carregarEstadosCidades();
     return estados;
